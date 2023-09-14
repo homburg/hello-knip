@@ -1992,6 +1992,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"site-1@workspace:apps/site-1":
+  version: 0.0.0-use.local
+  resolution: "site-1@workspace:apps/site-1"
+  languageName: unknown
+  linkType: soft
+
 "slash@npm:^4.0.0":
   version: 4.0.0
   resolution: "slash@npm:4.0.0"
