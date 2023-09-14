@@ -1,0 +1,17 @@
+{
+  "name": "hello-knip",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:homburg/hello-knip.git",
+  "author": "Thomas B Homburg <thomas@homburg.dk>",
+  "license": "MIT",
+  "packageManager": "yarn@3.6.3",
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "knip": "^2.24.1",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.4"
+  }
+}
