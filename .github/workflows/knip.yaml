@@ -53,7 +53,7 @@ jobs:
             ${{ steps.knip.outputs.output }}
             ```
 
-            ### Error output
+            ### Knip error output
 
             ```
             ${{ steps.knip.outputs.error }}
