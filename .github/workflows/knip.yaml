@@ -10,7 +10,7 @@ jobs:
       issues: write
       # actions: write
       # checks: write
-      contents: write
+      # contents: write
       # deployments: write
       # id-token: write
       # packages: write
@@ -24,17 +24,20 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          cache: yarn
+          bun-version: latest
 
-      - run: yarn
+      - run: bun install
 
       - id: knip
         name: Run knip
         run: |
           echo -n "output=" >> "GITHUB_OUTPUT"
-          yarn knip | tee -a "GITHUB_OUTPUT"
+          bun knip 2>err | tee -a "GITHUB_OUTPUT"
+
+          echo -n "error=" >> "$GITHUB_OUTPUT"
+          cat err | tee -a "GITHUB_OUTPUT"
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -55,4 +58,10 @@ jobs:
 
             ```
             ${{ steps.knip.outputs.output }}
+            ```
+
+            ### Error output
+
+            ```
+            ${{ steps.knip.outputs.error }}
             ```
