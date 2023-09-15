@@ -33,11 +33,11 @@ jobs:
       - id: knip
         name: Run knip
         run: |
-          echo -n "output=" >> "GITHUB_OUTPUT"
-          (bun knip || true) 2>err | tee -a "GITHUB_OUTPUT"
+          echo -n "output=" >> "$GITHUB_OUTPUT"
+          (bun knip || true) 2>err | tee -a "$GITHUB_OUTPUT"
 
           echo -n "error=" >> "$GITHUB_OUTPUT"
-          cat err | tee -a "GITHUB_OUTPUT"
+          cat err | tee -a "$GITHUB_OUTPUT"
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
