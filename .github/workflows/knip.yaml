@@ -6,22 +6,31 @@ on:
 jobs:
   knip:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          cache: yarn
+          bun-version: latest
 
-      - run: yarn
+      - run: bun install
 
       - id: knip
         name: Run knip
         run: |
-          echo -n "output=" >> "GITHUB_OUTPUT"
-          yarn knip | tee -a "GITHUB_OUTPUT"
+          echo "output<<'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
+          (bun knip || true) 2>err | tee -a "$GITHUB_OUTPUT"
+          echo "'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
+
+          echo "error<<'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
+          cat err | tee -a "$GITHUB_OUTPUT"
+          echo "'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
+
+          echo '"'$(cat "$GITHUB_OUTPUT")'"'
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -42,4 +51,10 @@ jobs:
 
             ```
             ${{ steps.knip.outputs.output }}
+            ```
+
+            ### Error output
+
+            ```
+            ${{ steps.knip.outputs.error }}
             ```
