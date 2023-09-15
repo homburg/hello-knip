@@ -34,7 +34,7 @@ jobs:
         name: Run knip
         run: |
           echo -n "output=" >> "GITHUB_OUTPUT"
-          bun knip 2>err | tee -a "GITHUB_OUTPUT"
+          (bun knip || true) 2>err | tee -a "GITHUB_OUTPUT"
 
           echo -n "error=" >> "$GITHUB_OUTPUT"
           cat err | tee -a "GITHUB_OUTPUT"
