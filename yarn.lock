@@ -1345,6 +1345,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lib-1@workspace:libs/lib-1":
+  version: 0.0.0-use.local
+  resolution: "lib-1@workspace:libs/lib-1"
+  languageName: unknown
+  linkType: soft
+
 "local-pkg@npm:^0.4.3":
   version: 0.4.3
   resolution: "local-pkg@npm:0.4.3"
