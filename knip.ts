@@ -1,5 +1,15 @@
 import type { KnipConfig } from "knip";
 
-const config: KnipConfig = {};
+import packageJson from "./package.json";
+
+const workspaces = Object.fromEntries(
+  packageJson.workspaces.map((w) => {
+    return [w, { entry: "**/*.vitest.ts" }];
+  })
+);
+
+const config: KnipConfig = {
+  workspaces,
+};
 
 export default config;
