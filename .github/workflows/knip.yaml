@@ -41,6 +41,8 @@ jobs:
           cat err | tee -a "$GITHUB_OUTPUT"
           echo "'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
 
+          echo '"'$(cat "$GITHUB_OUTPUT")'"'
+
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
