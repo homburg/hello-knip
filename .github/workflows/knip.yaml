@@ -1,0 +1,42 @@
+name: Run knip
+
+on:
+  pull_request:
+
+jobs:
+  knip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+
+      - run: yarn
+
+      - id: knip
+        run: |
+          echo -n "output=" >> "GITHUB_OUTPUT"
+          yarn knip | tee -a "GITHUB_OUTPUT"
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: Knip output
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          edit-mode: replace
+          body: |
+            ## Knip output
+
+            ```
+            ${{ steps.knip.outputs.output }}
+            ```
