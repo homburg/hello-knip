@@ -3,6 +3,12 @@
   "references": [
     {
       "path": "apps/site-1"
+    },
+    {
+      "path": "apps/next-site"
+    },
+    {
+      "path": "libs/lib-1"
     }
   ]
 }

@@ -251,6 +251,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hello-knip/lib-1@workspace:*, @hello-knip/lib-1@workspace:libs/lib-1":
+  version: 0.0.0-use.local
+  resolution: "@hello-knip/lib-1@workspace:libs/lib-1"
+  languageName: unknown
+  linkType: soft
+
 "@humanwhocodes/config-array@npm:^0.11.11":
   version: 0.11.11
   resolution: "@humanwhocodes/config-array@npm:0.11.11"
@@ -3067,12 +3073,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lib-1@workspace:libs/lib-1":
-  version: 0.0.0-use.local
-  resolution: "lib-1@workspace:libs/lib-1"
-  languageName: unknown
-  linkType: soft
-
 "lilconfig@npm:^2.0.5, lilconfig@npm:^2.1.0":
   version: 2.1.0
   resolution: "lilconfig@npm:2.1.0"
@@ -3407,6 +3407,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "next-site@workspace:apps/next-site"
   dependencies:
+    "@hello-knip/lib-1": "workspace:*"
     "@types/node": 20.6.2
     "@types/react": 18.2.21
     "@types/react-dom": 18.2.7
