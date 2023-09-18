@@ -13,6 +13,7 @@
   "devDependencies": {
     "knip": "^2.24.1",
     "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.4"
   }
 }
