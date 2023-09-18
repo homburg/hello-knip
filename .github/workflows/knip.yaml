@@ -23,7 +23,7 @@ jobs:
         name: Run knip
         run: |
           echo "output<<'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
-          (bun knip || true) 2>err | tee -a "$GITHUB_OUTPUT"
+          (./node_modules/.bin/knip || true) 2>err | tee -a "$GITHUB_OUTPUT"
           echo "'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
 
           echo "error<<'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
