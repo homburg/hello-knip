@@ -13,11 +13,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/setup-node@v3
         with:
-          bun-version: latest
+          node-version: "18.x"
+          cache: "npm"
 
-      - run: bun install
+      - run: npm ci
 
       - id: knip
         name: Run knip
