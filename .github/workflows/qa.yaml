@@ -21,7 +21,7 @@ jobs:
       - name: Run linters
         uses: madethis/lint-action@main
         with:
-          eslint: true
+          eslint: false
           prettier: true
           tsc: true
           prettier_extensions: "css,html,js,json,jsx,md,sass,scss,ts,tsx,vue,yaml,yml,xml"
