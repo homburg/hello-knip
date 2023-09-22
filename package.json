@@ -11,7 +11,7 @@
     "libs/*"
   ],
   "devDependencies": {
-    "knip": "^2.24.1",
+    "knip": "^2.25.2",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   }
