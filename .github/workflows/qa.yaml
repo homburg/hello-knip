@@ -19,7 +19,7 @@ jobs:
       - run: bun install
 
       - name: Run linters
-        uses: wearerequired/lint-action@v2
+        uses: madethis/lint-action@main
         with:
           eslint: true
           prettier: true
