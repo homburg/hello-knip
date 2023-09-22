@@ -1,0 +1,29 @@
+name: QA
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - run: bun install
+
+      - name: Run linters
+        uses: madethis/lint-action@main
+        with:
+          eslint: false
+          prettier: true
+          tsc: true
+          prettier_extensions: "css,html,js,json,jsx,md,sass,scss,ts,tsx,vue,yaml,yml,xml"
+          eslint_args: "--quiet"
+          eslint_extensions: "js,ts,tsx"
