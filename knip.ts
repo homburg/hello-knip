@@ -1,7 +1,10 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  entry: ["*.vitest.ts", "**/*.vitest.ts"],
+  vitest: {
+    config: "vitest.config.ts",
+    entry: ["*.vitest.ts", "**/*.vitest.ts"],
+  },
 };
 
 export default config;
