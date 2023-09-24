@@ -4,7 +4,12 @@ import packageJson from "./package.json";
 
 const workspaces = Object.fromEntries(
   packageJson.workspaces.map((w) => {
-    return [w, { entry: "**/*.vitest.ts" }];
+    return [
+      w,
+      {
+        vitest: { entry: "**/*.vitest.ts" },
+      },
+    ];
   })
 );
 
