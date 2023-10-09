@@ -22,6 +22,10 @@ jobs:
       - id: knip
         name: Run knip
         run: |
+          echo "version<<'KNIP_VERSION'" >> "$GITHUB_OUTPUT"
+          (./node_modules/.bin/knip --version || true) 2>err | tee -a "$GITHUB_OUTPUT"
+          echo "'KNIP_VERSION'" >> "$GITHUB_OUTPUT"
+
           echo "output<<'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
           (./node_modules/.bin/knip || true) 2>err | tee -a "$GITHUB_OUTPUT"
           echo "'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
@@ -47,6 +51,12 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           edit-mode: replace
           body: |
+            ## Knip version
+
+            ```
+            ${{ steps.knip.outputs.version }}
+            ```
+
             ## Knip output
 
             ```
