@@ -7,3 +7,5 @@ pnp.*
 !.yarn/versions
 
 **/node_modules
+
+*.tsbuildinfo
