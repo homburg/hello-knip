@@ -5,9 +5,13 @@ on:
 
 jobs:
   knip:
+    name: "knip${{ matrix.args }}"
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    strategy:
+      matrix:
+        args: ["", " --workspace apps/next-site"]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,14 +24,14 @@ jobs:
       - run: bun install
 
       - id: knip
-        name: Run knip
+        name: Run knip ${{ matrix.args }}
         run: |
           echo "version<<'KNIP_VERSION'" >> "$GITHUB_OUTPUT"
           (./node_modules/.bin/knip --version || true) 2>err | tee -a "$GITHUB_OUTPUT"
           echo "'KNIP_VERSION'" >> "$GITHUB_OUTPUT"
 
           echo "output<<'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
-          (./node_modules/.bin/knip || true) 2>err | tee -a "$GITHUB_OUTPUT"
+          (./node_modules/.bin/knip${{ matrix.args }} || true) 2>err | tee -a "$GITHUB_OUTPUT"
           echo "'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
 
           echo "error<<'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
@@ -42,7 +46,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: "github-actions[bot]"
-          body-includes: Knip output
+          body-includes: Knip${{ matrix.args }} output
 
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v3
@@ -57,7 +61,7 @@ jobs:
             ${{ steps.knip.outputs.version }}
             ```
 
-            ## Knip output
+            ## Knip${{ matrix.args }} output
 
             ```
             ${{ steps.knip.outputs.output }}
