@@ -6,8 +6,15 @@
         "name": "next"
       }
     ],
+    "baseUrl": "./src/",
     "paths": {
-      "@hello-knip/lib-1": ["../libs/lib-1"] ,
+      "@hello-knip/lib-1/*": [
+        // Relative to src:
+        // 1. src
+        // 2. next-site
+        // 3. apps
+        "../../../libs/lib-1/*"
+      ],
       "@/*": ["./src/*"]
     }
   },
