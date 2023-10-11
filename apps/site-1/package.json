@@ -1,5 +1,8 @@
 {
   "name": "site-1",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@hello-knip/lib-1": "workspace:*"
+  }
 }
