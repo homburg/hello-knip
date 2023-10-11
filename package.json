@@ -11,7 +11,7 @@
     "libs/*"
   ],
   "devDependencies": {
-    "knip": "graph",
+    "knip": "0.0.0-graph.3",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   }
