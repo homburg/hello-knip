@@ -6,7 +6,8 @@
         "name": "next"
       }
     ],
-"paths": {
+    "paths": {
+      "@hello-knip/lib-1": ["../libs/lib-1"] ,
       "@/*": ["./src/*"]
     }
   },
