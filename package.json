@@ -5,7 +5,6 @@
   "repository": "git@github.com:homburg/hello-knip.git",
   "author": "Thomas B Homburg <thomas@homburg.dk>",
   "license": "MIT",
-  "packageManager": "yarn@3.6.3",
   "workspaces": [
     "apps/*",
     "libs/*"
