@@ -5,15 +5,14 @@
   "repository": "git@github.com:homburg/hello-knip.git",
   "author": "Thomas B Homburg <thomas@homburg.dk>",
   "license": "MIT",
-  "packageManager": "yarn@3.6.3",
   "workspaces": [
     "apps/*",
     "libs/*"
   ],
   "devDependencies": {
-    "knip": "2.32.4",
+    "knip": "^2.37.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.6"
   }
 }
