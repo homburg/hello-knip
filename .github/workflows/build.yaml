@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  build-next-site:
+  build:
     name: "Build ${{ matrix.app }}"
     runs-on: ubuntu-latest
     permissions:
@@ -43,29 +43,10 @@ jobs:
 
           echo '"'$(cat "$GITHUB_OUTPUT")'"'
 
-      - id: comment-body-includes
-        uses: actions/github-script@v6
-        name: Comment id
-        with:
-          script: |
-            const cmd = ${{ toJSON(steps.build-command.outputs.command) }};
-
-            core.setOutput('comment', `<!-- cmd: ${cmd} -->`)
-
-      - name: Find comment
-        uses: peter-evans/find-comment@v2
-        id: fc
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: ${{ steps.comment-body-includes.outputs.comment }}
-
       - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v3
+        uses: ./.github/actions/comment
         with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          edit-mode: replace
+          key: ${{ steps.build-command.outputs.command }}
           body: |
             ## `${{ steps.build-command.outputs.command }}` output
 

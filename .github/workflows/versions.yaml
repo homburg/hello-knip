@@ -19,26 +19,31 @@ jobs:
 
       - uses: jdx/rtx-action@v1
 
-      - run: bun install
+      - name: Versions
+        id: versions
+        uses: actions/github-script@v6
+        with:
+          script: |
+            function e(cmd) {
+              return require('child_process').execSync(cmd).toString().trim();
+            }
 
-      - id: knip
-        name: Run knip ${{ matrix.args }}
-        run: |
-          echo "output<<'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
-          (./node_modules/.bin/knip${{ matrix.args }} || true) 2>err | tee -a "$GITHUB_OUTPUT"
-          echo "'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
-
-          echo "error<<'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
-          cat err | tee -a "$GITHUB_OUTPUT"
-          echo "'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
-
-          echo '"'$(cat "$GITHUB_OUTPUT")'"'
+            core.setOutput('node-version', e("node --version"))
+            core.setOutput('bun-version', e("bun --version"))
+            core.setOutput('knip-version', e("./node_modules/.bin/knip --version"))
 
       - name: Create or update comment
         uses: ./.github/actions/comment
         with:
-          key: knip${{ matrix.args }}
+          key: versions
           body: |
+            ## Versions
+
+            - `node@${{ steps.versions.outputs.node-version }}`
+            - `bun@${{ steps.versions.outputs.bun-version }}`
+            - `knip@${{ steps.versions.outputs.knip-version }}`
+
+
             ## Knip${{ matrix.args }} output
 
             ```
