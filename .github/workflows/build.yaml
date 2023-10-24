@@ -1,0 +1,63 @@
+name: "Build"
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    name: "Build ${{ matrix.app }}"
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix:
+        app: ["apps/next-site"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: jdx/rtx-action@v1
+
+      - run: bun install
+
+      - id: build-command
+        uses: actions/github-script@v6
+        name: Build command
+        with:
+          script: |
+            const dir = ${{ toJSON(matrix.app) }};
+
+            core.setOutput('command', `bun --cwd ${dir} build`)
+
+      - id: build
+        name: ${{ steps.build-command.outputs.command }}
+        run: |
+          echo "output<<'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
+          (${{ steps.build-command.outputs.command }} || true) 2>err | tee -a "$GITHUB_OUTPUT"
+          echo "'KNIP_OUTPUT'" >> "$GITHUB_OUTPUT"
+
+          echo "error<<'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
+          cat err | tee -a "$GITHUB_OUTPUT"
+          echo "'KNIP_ERROR'" >> "$GITHUB_OUTPUT"
+
+          echo '"'$(cat "$GITHUB_OUTPUT")'"'
+
+      - name: Create or update comment
+        uses: ./.github/actions/comment
+        with:
+          key: ${{ steps.build-command.outputs.command }}
+          body: |
+            ## `${{ steps.build-command.outputs.command }}` output
+
+            ```
+            ${{ steps.build.outputs.output }}
+            ```
+
+            ### `${{ steps.build-command.outputs.command }}` error output
+
+            ```
+            ${{ steps.build.outputs.error }}
+            ```
+
+            ${{ steps.comment-body-includes.outputs.comment }}

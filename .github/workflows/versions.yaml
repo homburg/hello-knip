@@ -1,0 +1,43 @@
+name: Versions
+
+on:
+  pull_request:
+
+jobs:
+  versions:
+    name: Versions
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: jdx/rtx-action@v1
+
+      - run: bun install
+
+      - name: Versions
+        id: versions
+        uses: actions/github-script@v6
+        with:
+          script: |
+            function e(cmd) {
+              return require('child_process').execSync(cmd).toString().trim();
+            }
+
+            core.setOutput('node-version', e("node --version"))
+            core.setOutput('bun-version', e("bun --version"))
+            core.setOutput('knip-version', e("./node_modules/.bin/knip --version"))
+
+      - name: Create or update comment
+        uses: ./.github/actions/comment
+        with:
+          key: versions
+          body: |
+            ## Versions
+
+            - `node@${{ steps.versions.outputs.node-version }}`
+            - `bun@${{ steps.versions.outputs.bun-version }}`
+            - `knip@${{ steps.versions.outputs.knip-version }}`
