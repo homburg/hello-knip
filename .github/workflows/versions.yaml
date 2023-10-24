@@ -1,17 +1,14 @@
-name: Run knip
+name: Versions
 
 on:
   pull_request:
 
 jobs:
-  knip:
-    name: "knip${{ matrix.args }}"
+  versions:
+    name: Versions
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    strategy:
-      matrix:
-        args: ["", " --workspace apps/next-site"]
     steps:
       - uses: actions/checkout@v4
         with:
