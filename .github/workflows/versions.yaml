@@ -19,6 +19,8 @@ jobs:
 
       - uses: jdx/rtx-action@v1
 
+      - run: bun install
+
       - name: Versions
         id: versions
         uses: actions/github-script@v6
