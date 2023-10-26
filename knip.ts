@@ -1,7 +1,7 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  ignoreDependencies: ["styles/base.css"],
+  ignoreDependencies: ["styles"],
 };
 
 export default config;
