@@ -34,4 +34,7 @@ runs:
         comment-id: ${{ steps.fc.outputs.comment-id }}
         issue-number: ${{ github.event.pull_request.number }}
         edit-mode: replace
-        body: "${{ inputs.body }}"
+        body: |
+          ${{ inputs.body }}
+
+          ${{ steps.comment-body-includes.outputs.comment }}
